@@ -10,4 +10,6 @@ class Itinerary < ApplicationRecord
 
   has_many :itinerary_cities
   has_many :cities, through: :itinerary_cities
+
+  has_many :expenses
 end

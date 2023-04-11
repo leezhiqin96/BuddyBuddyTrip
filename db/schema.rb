@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_11_032644) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_11_034350) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_032644) do
     t.datetime "updated_at", null: false
     t.bigint "city_id", null: false
     t.index ["city_id"], name: "index_destinations_on_city_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "expense_type", null: false
+    t.integer "amount", null: false
+    t.datetime "expense_date"
+    t.bigint "itinerary_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_id"], name: "index_expenses_on_itinerary_id"
   end
 
   create_table "itineraries", force: :cascade do |t|
@@ -111,6 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_032644) do
   add_foreign_key "collaborations", "itineraries"
   add_foreign_key "collaborations", "users"
   add_foreign_key "destinations", "cities"
+  add_foreign_key "expenses", "itineraries"
   add_foreign_key "itineraries", "users", column: "owner_id"
   add_foreign_key "itinerary_cities", "cities"
   add_foreign_key "itinerary_cities", "itineraries"
