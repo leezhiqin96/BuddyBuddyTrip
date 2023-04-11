@@ -6,7 +6,7 @@ class Itinerary < ApplicationRecord
   has_many :storage_dates
 
   has_many :itinerary_destinations
-  has_many :destinations, thorugh: :itinerary_destinations
+  has_many :destinations, through: :itinerary_destinations
 
   has_many :itinerary_cities
   has_many :cities, through: :itinerary_cities
