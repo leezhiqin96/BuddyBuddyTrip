@@ -1,5 +1,5 @@
 class City < ApplicationRecord
-  belongs_to :country
+  belongs_to :country, class_name: "Country", foreign_key: :country_code
   has_many :destinations
 
   has_many :itinerary_cities

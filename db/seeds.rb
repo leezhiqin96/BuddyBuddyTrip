@@ -61,10 +61,10 @@ puts parsed_response['msg']
 
 parsed_response['data'].each do |data|
   data['cities'].each do |city_name|
-    country = Country.find_by(country_code: data['iso2'])
-    city = City.new(name: city_name)
-    city.country_code = country.country_code
-    city.save
+    city = City.create!(
+      name: city_name,
+      country_code: Country.find(data['iso2']).country_code
+    )
     puts "Added #{city_name} to Cities"
   end
 end
