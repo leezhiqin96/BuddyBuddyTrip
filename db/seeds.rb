@@ -37,22 +37,36 @@ puts "Loading Countries"
 require "json"
 require "net/http"
 
-uri = URI('https://countriesnow.space/api/v0.1/countries/iso')
+uri = URI('https://countriesnow.space/api/v0.1/countries')
 response = Net::HTTP.get(uri)
 parsed_response = JSON.parse(response)
 puts parsed_response['msg']
 
 parsed_response['data'].each do |country|
+  Country.delete(country['iso2']) if Country.exists?(country['iso2'])
   Country.create!(
-    country_code: country['Iso2'],
-    name: country['name']
+    country_code: country['iso2'],
+    name: country['country']
   )
-  puts "Added #{country['name']}"
+  puts "Added #{country['country']} to Countries"
 end
 
 # ===================== End of Countries =================================
 puts "Loading Cities"
 # ===================== Start of Cities ===============================
+uri = URI('https://countriesnow.space/api/v0.1/countries')
+response = Net::HTTP.get(uri)
+parsed_response = JSON.parse(response)
+puts parsed_response['msg']
 
+parsed_response['data'].each do |data|
+  data['cities'].each do |city_name|
+    country = Country.find_by(country_code: data['iso2'])
+    city = City.new(name: city_name)
+    city.country_code = country.country_code
+    city.save
+    puts "Added #{city_name} to Cities"
+  end
+end
 # ===================== End of Cities =================================
 puts "Done!!!!!!!!"
