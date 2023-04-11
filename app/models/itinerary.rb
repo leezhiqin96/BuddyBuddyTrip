@@ -12,4 +12,7 @@ class Itinerary < ApplicationRecord
   has_many :cities, through: :itinerary_cities
 
   has_many :expenses
+
+  validates :name, :start_date, :end_date, presence: true
+  validates :total_budget, numericality: { message: "Please provide numbers" }
 end

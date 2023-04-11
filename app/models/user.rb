@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :itineraries, through: :collaborations
   has_many :itineraries
   has_many :collaborations
+
+  validates :first_name, :last_name, :email, :username, presence: true
+  validates :email, :username, uniqueness: true
+  validates :username, length: { minimum: 4, too_short: "%{ count } characters minimum for your username!" }
 end
