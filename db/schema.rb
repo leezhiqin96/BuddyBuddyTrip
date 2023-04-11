@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_08_115930) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_11_005114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,19 +33,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_115930) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "itinerary_storage_dates", force: :cascade do |t|
-    t.bigint "itinerary_id", null: false
-    t.bigint "storage_date_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["itinerary_id"], name: "index_itinerary_storage_dates_on_itinerary_id"
-    t.index ["storage_date_id"], name: "index_itinerary_storage_dates_on_storage_date_id"
-  end
-
   create_table "storage_dates", force: :cascade do |t|
     t.datetime "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "itinerary_id", null: false
+    t.index ["itinerary_id"], name: "index_storage_dates_on_itinerary_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -65,6 +58,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_115930) do
   add_foreign_key "collaborations", "itineraries"
   add_foreign_key "collaborations", "users"
   add_foreign_key "itineraries", "users", column: "owner_id"
-  add_foreign_key "itinerary_storage_dates", "itineraries"
-  add_foreign_key "itinerary_storage_dates", "storage_dates"
+  add_foreign_key "storage_dates", "itineraries"
 end
