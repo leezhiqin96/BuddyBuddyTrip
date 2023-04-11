@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_11_025004) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_11_031520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_025004) do
     t.integer "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "itinerary_cities", force: :cascade do |t|
+    t.bigint "itinerary_id", null: false
+    t.bigint "city_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_itinerary_cities_on_city_id"
+    t.index ["itinerary_id"], name: "index_itinerary_cities_on_itinerary_id"
   end
 
   create_table "itinerary_destinations", force: :cascade do |t|
@@ -102,6 +111,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_025004) do
   add_foreign_key "collaborations", "users"
   add_foreign_key "destinations", "cities"
   add_foreign_key "itineraries", "users", column: "owner_id"
+  add_foreign_key "itinerary_cities", "cities"
+  add_foreign_key "itinerary_cities", "itineraries"
   add_foreign_key "itinerary_destinations", "destinations"
   add_foreign_key "itinerary_destinations", "itineraries"
   add_foreign_key "storage_date_destinations", "destinations"
