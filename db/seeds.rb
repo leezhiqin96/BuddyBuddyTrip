@@ -34,6 +34,21 @@ end
 # ===================== End of Itineraries =================================
 puts "Loading Countries"
 # ===================== Start of Countries ===============================
+require "json"
+require "net/http"
+
+uri = URI('https://countriesnow.space/api/v0.1/countries/iso')
+response = Net::HTTP.get(uri)
+parsed_response = JSON.parse(response)
+puts parsed_response['msg']
+
+parsed_response['data'].each do |country|
+  Country.create!(
+    country_code: country['Iso2'],
+    name: country['name']
+  )
+  puts "Added #{country['name']}"
+end
 
 # ===================== End of Countries =================================
 puts "Loading Cities"
