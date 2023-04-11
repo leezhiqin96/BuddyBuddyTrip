@@ -15,4 +15,5 @@ class Itinerary < ApplicationRecord
 
   validates :name, :start_date, :end_date, presence: true
   validates :total_budget, numericality: { message: "Please provide numbers" }
+  validates :end_date, comparison: { greater_than: :start_date }
 end
