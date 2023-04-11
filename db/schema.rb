@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_11_005114) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_11_021132) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "address", null: false
+    t.string "country_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "collaborations", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -21,6 +30,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_005114) do
     t.datetime "updated_at", null: false
     t.index ["itinerary_id"], name: "index_collaborations_on_itinerary_id"
     t.index ["user_id"], name: "index_collaborations_on_user_id"
+  end
+
+  create_table "countries", primary_key: "country_code", id: :string, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "destinations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "city_id", null: false
+    t.index ["city_id"], name: "index_destinations_on_city_id"
   end
 
   create_table "itineraries", force: :cascade do |t|
@@ -55,8 +79,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_005114) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cities", "countries", column: "country_code", primary_key: "country_code"
   add_foreign_key "collaborations", "itineraries"
   add_foreign_key "collaborations", "users"
+  add_foreign_key "destinations", "cities"
   add_foreign_key "itineraries", "users", column: "owner_id"
   add_foreign_key "storage_dates", "itineraries"
 end
