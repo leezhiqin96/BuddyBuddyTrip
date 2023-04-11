@@ -1,0 +1,2 @@
+class StorageDateDestination < ApplicationRecord
+end
