@@ -72,7 +72,7 @@ puts "Loading Itinerary Countries"
 end
 # ===================== End of Itinerary Countries ============================
 
-puts "Loading Dates"
+puts "Loading Itinerary Dates"
 
 # ===================== Start of Storage Dates =============================
 Itinerary.all.each do |itinerary|

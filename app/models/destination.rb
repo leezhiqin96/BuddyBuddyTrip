@@ -9,7 +9,7 @@ class Destination < ApplicationRecord
   has_many :storage_dates, through: :storage_date_destinations
 
   has_many :itinerary_destinations
-  has_many :itineraries, thorugh: :itinerary_destinations
+  has_many :itineraries, through: :itinerary_destinations
 
   validates :name, :address, presence: true
 end
