@@ -1,4 +1,5 @@
 puts "Loading default users"
+
 # ===================== Start of User ========================================
 5.times do
   faker_first_name = Faker::Name.first_name
@@ -18,7 +19,9 @@ puts "Loading default users"
   )
 end
 # ===================== End of User ==========================================
+
 puts "Loading Default Itineraries"
+
 # ===================== Start of Itineraries ===============================
 10.times do
   rand_start_date = rand(Date.today..(Date.today + 1.year))
@@ -32,7 +35,9 @@ puts "Loading Default Itineraries"
   )
 end
 # ===================== End of Itineraries =================================
+
 puts "Loading Countries"
+
 # ===================== Start of Countries ===============================
 require "json"
 require "net/http"
@@ -52,6 +57,35 @@ parsed_response['data'].each do |country|
 end
 
 # ===================== End of Countries =================================
+
+puts "Loading Itinerary Countries"
+
+# ===================== Start of Itinerary Countries ==========================
+%w[China Australia Japan Taiwan Thailand].each do |country_name|
+  country = Country.find_by(name: country_name)
+  Itinerary.where("name LIKE ?", "%#{country_name}%").each do |itinerary|
+    ItineraryCountry.create!(
+      itinerary:,
+      country:
+    )
+  end
+end
+# ===================== End of Itinerary Countries ============================
+
+puts "Loading Dates"
+
+# ===================== Start of Storage Dates =============================
+Itinerary.all.each do |itinerary|
+  days_apart = ((itinerary.end_date - itinerary.start_date) / 86_400).to_i
+  (0...days_apart).each do |num|
+    StorageDate.create!(
+      date: itinerary.start_date + num.days,
+      itinerary:
+    )
+  end
+end
+# ===================== End of Storage Dates ===============================
+
 puts "Done!!!!!!!!"
 
 # puts "Loading Cities"
