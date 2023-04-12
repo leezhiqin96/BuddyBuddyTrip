@@ -10,18 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_11_034350) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_12_022100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "cities", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.string "address", null: false
-    t.string "country_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "collaborations", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -44,8 +35,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_034350) do
     t.string "address", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "city_id", null: false
-    t.index ["city_id"], name: "index_destinations_on_city_id"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "country_code"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -69,13 +61,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_034350) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "itinerary_cities", force: :cascade do |t|
+  create_table "itinerary_countries", force: :cascade do |t|
     t.bigint "itinerary_id", null: false
-    t.bigint "city_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["city_id"], name: "index_itinerary_cities_on_city_id"
-    t.index ["itinerary_id"], name: "index_itinerary_cities_on_itinerary_id"
+    t.string "country_code"
+    t.index ["itinerary_id"], name: "index_itinerary_countries_on_itinerary_id"
   end
 
   create_table "itinerary_destinations", force: :cascade do |t|
@@ -114,18 +105,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_034350) do
     t.datetime "updated_at", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
+    t.string "username", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "cities", "countries", column: "country_code", primary_key: "country_code"
   add_foreign_key "collaborations", "itineraries"
   add_foreign_key "collaborations", "users"
-  add_foreign_key "destinations", "cities"
+  add_foreign_key "destinations", "countries", column: "country_code", primary_key: "country_code"
   add_foreign_key "expenses", "itineraries"
   add_foreign_key "itineraries", "users", column: "owner_id"
-  add_foreign_key "itinerary_cities", "cities"
-  add_foreign_key "itinerary_cities", "itineraries"
+  add_foreign_key "itinerary_countries", "countries", column: "country_code", primary_key: "country_code"
+  add_foreign_key "itinerary_countries", "itineraries"
   add_foreign_key "itinerary_destinations", "destinations"
   add_foreign_key "itinerary_destinations", "itineraries"
   add_foreign_key "storage_date_destinations", "destinations"

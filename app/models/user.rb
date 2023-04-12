@@ -5,10 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :itineraries, through: :collaborations
-  has_many :itineraries
+  has_many :itineraries, foreign_key: :owner_id
   has_many :collaborations
 
   validates :first_name, :last_name, :email, :username, presence: true
   validates :email, :username, uniqueness: true
-  validates :username, length: { minimum: 4, too_short: "%{ count } characters minimum for your username!" }
+  validates :username, length: { minimum: 3, too_short: '%<count> characters minimum for your username!' }
 end

@@ -6,13 +6,14 @@ class Itinerary < ApplicationRecord
   has_many :storage_dates
 
   has_many :itinerary_destinations
-  has_many :destinations, thorugh: :itinerary_destinations
+  has_many :destinations, through: :itinerary_destinations
 
-  has_many :itinerary_cities
-  has_many :cities, through: :itinerary_cities
+  has_many :itinerary_countries
+  has_many :countries, through: :itinerary_countries
 
   has_many :expenses
 
   validates :name, :start_date, :end_date, presence: true
   validates :total_budget, numericality: { message: "Please provide numbers" }
+  validates :end_date, comparison: { greater_than: :start_date }
 end
