@@ -36,7 +36,7 @@ puts "Loading Countries"
 # ===================== Start of Countries ===============================
 require "json"
 require "net/http"
-
+# https://countriesnow.space/api/v0.1/countries/positions
 uri = URI('https://countriesnow.space/api/v0.1/countries')
 response = Net::HTTP.get(uri)
 parsed_response = JSON.parse(response)
@@ -52,21 +52,22 @@ parsed_response['data'].each do |country|
 end
 
 # ===================== End of Countries =================================
-puts "Loading Cities"
-# ===================== Start of Cities ===============================
-uri = URI('https://countriesnow.space/api/v0.1/countries')
-response = Net::HTTP.get(uri)
-parsed_response = JSON.parse(response)
-puts parsed_response['msg']
-
-parsed_response['data'].each do |data|
-  data['cities'].each do |city_name|
-    city = City.create!(
-      name: city_name,
-      country_code: Country.find(data['iso2']).country_code
-    )
-    puts "Added #{city_name} to Cities"
-  end
-end
-# ===================== End of Cities =================================
 puts "Done!!!!!!!!"
+
+# puts "Loading Cities"
+# ===================== Start of Cities ===============================
+# uri = URI('https://countriesnow.space/api/v0.1/countries')
+# response = Net::HTTP.get(uri)
+# parsed_response = JSON.parse(response)
+# puts parsed_response['msg']
+
+# parsed_response['data'].each do |data|
+#   data['cities'].each do |city_name|
+#     City.create!(
+#       name: city_name,
+#       country_code: Country.find(data['iso2']).country_code
+#     )
+#     puts "Added #{city_name} to Cities"
+#   end
+# end
+# ===================== End of Cities =================================
