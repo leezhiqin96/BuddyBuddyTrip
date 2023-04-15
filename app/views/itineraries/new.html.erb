@@ -1,1 +1,6 @@
-<p>Hello</p>
+<%= simple_form_for @itinerary do |f| %>
+  <%= f.input :name, label: "Where do you want to go?" %>
+  <%= f.input :start_date, as: :date, input_html: { class: 'form-control' } %>
+  <%= f.input :end_date, as: :date, input_html: { class: 'form-control' } %>
+  <%= f.submit %>
+<% end %>
