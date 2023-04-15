@@ -7,7 +7,4 @@ Rails.application.routes.draw do
 
   # Itineraries routes
   resources :itineraries, only: %i[index new create show edit update destroy]
-
-  # Countries routes
-  resources :countries, only: %i[index show]
 end
