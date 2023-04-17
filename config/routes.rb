@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
+
+  authenticated :user do
+    root to: "pages#dashboard", as: :authenticated_root
+  end
+
+  # Default home page
   root to: "pages#home"
 
   # User routes
