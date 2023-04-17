@@ -17,4 +17,8 @@ class ItineraryPolicy < ApplicationPolicy
   def create?
     user.present?
   end
+
+  def edit?
+    record.owner == user
+  end
 end

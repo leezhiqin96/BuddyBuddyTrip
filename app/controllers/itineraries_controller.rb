@@ -17,10 +17,15 @@ class ItinerariesController < ApplicationController
     @itinerary.owner = current_user
 
     if @itinerary.save
-      redirect_to itinerary_path(@itinerary)
+      redirect_to edit_itinerary_path(@itinerary)
     else
       render "itineraries/new", status: :unprocessable_entity
     end
+  end
+
+  def edit
+    @itinerary = Itinerary.find(params[:id])
+    authorize @itinerary
   end
 
   private
