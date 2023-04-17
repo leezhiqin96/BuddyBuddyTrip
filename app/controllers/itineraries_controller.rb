@@ -3,6 +3,7 @@ class ItinerariesController < ApplicationController
 
   def show
     @itinerary = Itinerary.find(params[:id])
+    authorize @itinerary
   end
 
   def new
@@ -16,7 +17,7 @@ class ItinerariesController < ApplicationController
     @itinerary.owner = current_user
 
     if @itinerary.save
-      redirect itinerary_path(@itinerary)
+      redirect_to itinerary_path(@itinerary)
     else
       render "itineraries/new", status: :unprocessable_entity
     end
