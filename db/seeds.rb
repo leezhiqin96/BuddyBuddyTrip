@@ -26,13 +26,15 @@ puts "Loading Default Itineraries"
 10.times do
   rand_start_date = rand(Date.today..(Date.today + 1.year))
   rand_end_date = rand_start_date + rand(3..20).days
-  Itinerary.create!(
+  rand_user = User.find(rand(1..5))
+  itinerary = Itinerary.create!(
     name: "Trip to #{%w[China Australia Japan Taiwan Thailand].sample}",
     start_date: rand_start_date,
     end_date: rand_end_date,
-    owner_id: User.find(rand(1..5)).id,
+    owner_id: rand_user.id,
     total_budget: 2000
   )
+  Collaboration.create!(user: rand_user, itinerary:, role: 'editor')
 end
 # ===================== End of Itineraries =================================
 
