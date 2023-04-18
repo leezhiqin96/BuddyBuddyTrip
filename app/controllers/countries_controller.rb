@@ -4,12 +4,10 @@ class CountriesController < ApplicationController
   def search
     skip_authorization
 
-    @countries = Country.search_by_code_and_name(params[:query])\
+    @countries = Country.search_by_code_and_name(params[:query])
 
     respond_to do |format|
-      format.json do
-        render json: @countries
-      end
+      format.json { render partial: 'countries/country_search_result', locals: { countries: @countries } }
     end
   end
 end

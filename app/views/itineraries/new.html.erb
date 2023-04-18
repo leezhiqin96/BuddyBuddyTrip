@@ -4,6 +4,7 @@
       label: false,
       placeholder: 'Search Countries...',
       input_html: {
+        style: 'position: relative;',
         data: {
           action: 'keyup->search-countries#searchCountries'
           }
@@ -12,4 +13,10 @@
     <%= f.input :end_date, as: :date, html5: true %>
     <%= f.submit %>
   <% end %>
+
+  <div class="search-pop-up"
+    data-search-countries-target="popup"
+  >
+    <p>test</p>
+  </div>
 </div>

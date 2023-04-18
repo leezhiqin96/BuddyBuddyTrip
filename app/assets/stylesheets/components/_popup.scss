@@ -1,0 +1,10 @@
+.search-pop-up {
+  position: absolute;
+  // display: none;
+  z-index: -1;
+
+  &.active {
+    display: block;
+    z-index: 100;
+  }
+}
