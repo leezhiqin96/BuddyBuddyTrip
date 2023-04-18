@@ -15,6 +15,10 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.new(itinerary_params)
     authorize @itinerary
     @itinerary.owner = current_user
+    @itinerary.name = "Trip to #{itinerary_params[:name]}"
+
+    # Subject for changes (To include multiple countries in the future)
+    @itinerary.countries << Country.find_by(name: itinerary_params[:name])
 
     if @itinerary.save
       redirect_to edit_itinerary_path(@itinerary)
