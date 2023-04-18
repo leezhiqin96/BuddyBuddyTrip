@@ -18,9 +18,11 @@ class ItinerariesController < ApplicationController
     @itinerary.name = "Trip to #{itinerary_params[:name]}"
 
     # Subject for changes (To include multiple countries in the future)
-    @itinerary.countries << Country.find_by(name: itinerary_params[:name])
+    country = Country.find_by(name: itinerary_params[:name])
+    @itinerary.countries << country unless country.nil?
+    collaboration = Collaboration.new(user: current_user, itinerary: @itinerary, role: 'editor')
 
-    if @itinerary.save
+    if @itinerary.save && collaboration.save
       redirect_to edit_itinerary_path(@itinerary)
     else
       render "itineraries/new", status: :unprocessable_entity
