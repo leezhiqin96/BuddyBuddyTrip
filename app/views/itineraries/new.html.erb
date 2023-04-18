@@ -1,6 +1,26 @@
-<%= simple_form_for @itinerary do |f| %>
-  <%= f.input :name, label: "Where do you want to go?" %>
-  <%= f.input :start_date, as: :date, html5: true %>
-  <%= f.input :end_date, as: :date, html5: true %>
-  <%= f.submit %>
-<% end %>
+<div data-controller="search-countries">
+
+  <%= simple_form_for @itinerary do |f| %>
+    <%= f.input :name,
+      label: false,
+      placeholder: 'Search Countries...',
+      input_html: {
+        data: {
+          action: 'keyup->search-countries#searchCountries focus->search-countries#showResult',
+          search_countries_target: "input"
+          }
+      } %>
+
+    <div class="search-pop-up"
+      data-search-countries-target="popup"
+      data-search-countries-action="click->search-countries#selectResult"
+    >
+      <ul></ul>
+    </div>
+
+    <%= f.input :start_date, as: :date, html5: true %>
+    <%= f.input :end_date, as: :date, html5: true %>
+    <%= f.submit %>
+  <% end %>
+
+</div>

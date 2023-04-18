@@ -1,0 +1,19 @@
+.search-pop-up {
+  display: none;
+  position: absolute;
+  background-color: aqua;
+  border-radius: 8px;
+  width: 100%;
+
+  &.active {
+    display: block;
+  }
+
+  .country {
+    padding: 8px;
+
+    &:hover {
+      background-color: gray;
+    }
+  }
+}

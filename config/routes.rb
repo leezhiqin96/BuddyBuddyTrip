@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
   # Itineraries routes
   resources :itineraries, only: %i[index new create show edit update destroy]
+
+  get '/search_countries', to: 'countries#search', as: :search_countries
 end
