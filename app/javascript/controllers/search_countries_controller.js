@@ -6,6 +6,12 @@ export default class extends Controller {
 
   connect() {
     console.log("Connected to search-countries controller")
+    document.addEventListener("click", this.handleDocumentClick.bind(this));
+  }
+
+  disconnect() {
+    // Remove the click listener from the document object when the controller is disconnected
+    document.removeEventListener("click", this.handleDocumentClick)
   }
 
   searchCountries(e) {
@@ -38,16 +44,26 @@ export default class extends Controller {
   }
 
   showResult() {
-    this.popupTarget.classList.add('active')
+    this.popupTarget.classList.add('active');
   }
 
   hideResult() {
-    this.popupTarget.classList.remove('active')
+    this.popupTarget.classList.remove('active');
   }
 
   selectResult(e) {
     const selectedCountryName = e.target.innerText;
     this.inputTarget.value = selectedCountryName;
     this.hideResult();
+  }
+
+  handleDocumentClick(e) {
+    const target = e.target
+    const popup = this.popupTarget
+
+    // Check if the click event is not within the popup element or the input element
+    if (popup && !popup.contains(target) && target !== popup && target !== this.inputTarget) {
+      this.hideResult()
+    }
   }
 }
