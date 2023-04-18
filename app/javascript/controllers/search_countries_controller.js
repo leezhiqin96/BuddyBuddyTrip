@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="search-countries"
 export default class extends Controller {
-  static targets = ["popup"]
+  static targets = ["popup", "input"]
 
   connect() {
     console.log("Connected to search-countries controller")
@@ -28,11 +28,9 @@ export default class extends Controller {
 
           data.forEach((country) => {
             this.popupTarget.insertAdjacentHTML("beforeend",
-              `<div class="country"
-                data-action="click->search-countries#selectResult"
-              >
-                ${country.name}
-              </div>`
+            `<div class="country" data-action="click->search-countries#selectResult">
+              ${country.name}
+            </div>`
             )
           })
         });
@@ -47,7 +45,9 @@ export default class extends Controller {
     this.popupTarget.classList.remove('active')
   }
 
-  selectResult() {
-
+  selectResult(e) {
+    const selectedCountryName = e.target.innerText;
+    this.inputTarget.value = selectedCountryName;
+    this.hideResult();
   }
 }

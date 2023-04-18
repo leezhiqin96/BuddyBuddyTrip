@@ -6,14 +6,14 @@
       placeholder: 'Search Countries...',
       input_html: {
         data: {
-          action: 'keyup->search-countries#searchCountries
-          focus->search-countries#showResult
-          blur->search-countries#hideResult'
+          action: 'keyup->search-countries#searchCountries focus->search-countries#showResult',
+          search_countries_target: "input"
           }
       } %>
 
     <div class="search-pop-up"
       data-search-countries-target="popup"
+      data-search-countries-action="click->search-countries#selectResult"
     >
       <ul></ul>
     </div>
