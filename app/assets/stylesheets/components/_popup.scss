@@ -1,10 +1,16 @@
+#new-itinerary {
+  background-color: white;
+}
+
 .search-pop-up {
-  position: absolute;
   // display: none;
   z-index: -1;
+  position: absolute;
+  background-color: aqua;
+  border-radius: 8px;
+  padding: 8px;
 
   &.active {
-    display: block;
     z-index: 100;
   }
 }

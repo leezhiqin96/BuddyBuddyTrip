@@ -9,10 +9,10 @@ export default class extends Controller {
   }
 
   searchCountries(e) {
-    this.popupTarget.innerHTML = ''
     clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
+      // this.popupTarget.classList.add('active')
       const url = `/search_countries?query=${e.target.value}`;
 
       fetch(url, {
@@ -20,13 +20,21 @@ export default class extends Controller {
           Accept: "application/json",
         },
       })
-        .then((res) => res.json())
-        .then((data) => {
-          // this.listTarget.outerHTML = data;
+      .then((res) => res.json())
+      .then((data) => {
+          this.popupTarget.innerHTML = ''
           data.forEach((country) => {
             this.popupTarget.insertAdjacentHTML("beforeend", `<p>${country.name}</p>`)
           })
         });
     }, 800);
+  }
+
+  showResult() {
+    this.popupTarget.classList.add('active')
+  }
+
+  hideResult() {
+    this.popupTarget.classList.remove('active')
   }
 }
