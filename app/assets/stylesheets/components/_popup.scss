@@ -1,16 +1,19 @@
-#new-itinerary {
-  background-color: white;
-}
-
 .search-pop-up {
-  // display: none;
-  z-index: -1;
+  display: none;
   position: absolute;
   background-color: aqua;
   border-radius: 8px;
-  padding: 8px;
+  width: 100%;
 
   &.active {
-    z-index: 100;
+    display: block;
+  }
+
+  .country {
+    padding: 8px;
+
+    &:hover {
+      background-color: gray;
+    }
   }
 }

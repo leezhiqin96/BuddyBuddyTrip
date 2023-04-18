@@ -1,4 +1,4 @@
-<div id="new-itinerary" data-controller="search-countries">
+<div data-controller="search-countries">
 
   <%= simple_form_for @itinerary do |f| %>
     <%= f.input :name,
@@ -15,6 +15,7 @@
     <div class="search-pop-up"
       data-search-countries-target="popup"
     >
+      <ul></ul>
     </div>
 
     <%= f.input :start_date, as: :date, html5: true %>

@@ -10,9 +10,7 @@ export default class extends Controller {
 
   searchCountries(e) {
     clearTimeout(this.timer);
-
     this.timer = setTimeout(() => {
-      // this.popupTarget.classList.add('active')
       const url = `/search_countries?query=${e.target.value}`;
 
       fetch(url, {
@@ -23,8 +21,19 @@ export default class extends Controller {
       .then((res) => res.json())
       .then((data) => {
           this.popupTarget.innerHTML = ''
+
+          if (data.length == 0) {
+            this.popupTarget.innerHTML = 'No results'
+          }
+
           data.forEach((country) => {
-            this.popupTarget.insertAdjacentHTML("beforeend", `<p>${country.name}</p>`)
+            this.popupTarget.insertAdjacentHTML("beforeend",
+              `<div class="country"
+                data-action="click->search-countries#selectResult"
+              >
+                ${country.name}
+              </div>`
+            )
           })
         });
     }, 800);
@@ -36,5 +45,9 @@ export default class extends Controller {
 
   hideResult() {
     this.popupTarget.classList.remove('active')
+  }
+
+  selectResult() {
+
   }
 }
