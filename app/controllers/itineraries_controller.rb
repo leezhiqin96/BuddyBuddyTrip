@@ -17,7 +17,7 @@ class ItinerariesController < ApplicationController
     @itinerary.owner = current_user
     @itinerary.name = "Trip to #{itinerary_params[:name]}"
 
-    # Subject for changes (To include multiple countries in the future)
+    # Subject to changes (To include multiple countries in the future)
     country = Country.find_by(name: itinerary_params[:name])
     @itinerary.countries << country unless country.nil?
     collaboration = Collaboration.new(user: current_user, itinerary: @itinerary, role: 'editor')
