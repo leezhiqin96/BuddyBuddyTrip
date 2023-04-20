@@ -15,7 +15,7 @@ export default class extends Controller {
       container: this.element,
       style: "mapbox://styles/mapbox/streets-v12",
       center: [this.coordinatesValue.lng, this.coordinatesValue.lat],
-      zoom: 9
+      zoom: 12
     })
 
     // this.#fitMapToMarkers()
