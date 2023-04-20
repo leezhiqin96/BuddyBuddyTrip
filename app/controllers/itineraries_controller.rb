@@ -14,6 +14,7 @@ class ItinerariesController < ApplicationController
   def create
     @itinerary = Itinerary.new(itinerary_params)
     authorize @itinerary
+
     @itinerary.owner = current_user
     @itinerary.name = "Trip to #{itinerary_params[:name]}"
 
@@ -32,6 +33,12 @@ class ItinerariesController < ApplicationController
   def edit
     @itinerary = Itinerary.find(params[:id])
     authorize @itinerary
+
+    country = @itinerary.countries.first
+    @coordinates = {
+      lat: country.latitude,
+      lng: country.longitude
+    }
   end
 
   private
