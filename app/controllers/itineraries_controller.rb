@@ -39,6 +39,8 @@ class ItinerariesController < ApplicationController
       lat: country.latitude,
       lng: country.longitude
     }
+
+    @destinations = Destination.new
   end
 
   private
