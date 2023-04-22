@@ -43,8 +43,7 @@ puts "Loading Countries"
 # ===================== Start of Countries ===============================
 require "json"
 require "net/http"
-# https://countriesnow.space/api/v0.1/countries/positions
-uri = URI('https://countriesnow.space/api/v0.1/countries')
+uri = URI('https://countriesnow.space/api/v0.1/countries/positions')
 response = Net::HTTP.get(uri)
 parsed_response = JSON.parse(response)
 puts parsed_response['msg']
@@ -53,9 +52,11 @@ parsed_response['data'].each do |country|
   Country.delete(country['iso2']) if Country.exists?(country['iso2'])
   Country.create!(
     country_code: country['iso2'],
-    name: country['country']
+    name: country['name'],
+    latitude: country['lat'],
+    longitude: country['long']
   )
-  puts "Added #{country['country']} to Countries"
+  puts "Added #{country['name']} to Countries"
 end
 
 # ===================== End of Countries =================================

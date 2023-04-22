@@ -14,10 +14,11 @@ class ItinerariesController < ApplicationController
   def create
     @itinerary = Itinerary.new(itinerary_params)
     authorize @itinerary
+
     @itinerary.owner = current_user
     @itinerary.name = "Trip to #{itinerary_params[:name]}"
 
-    # Subject for changes (To include multiple countries in the future)
+    # Subject to changes (To include multiple countries in the future)
     country = Country.find_by(name: itinerary_params[:name])
     @itinerary.countries << country unless country.nil?
     collaboration = Collaboration.new(user: current_user, itinerary: @itinerary, role: 'editor')
@@ -32,6 +33,14 @@ class ItinerariesController < ApplicationController
   def edit
     @itinerary = Itinerary.find(params[:id])
     authorize @itinerary
+
+    country = @itinerary.countries.first
+    @coordinates = {
+      lat: country.latitude,
+      lng: country.longitude
+    }
+
+    @destinations = Destination.new
   end
 
   private
