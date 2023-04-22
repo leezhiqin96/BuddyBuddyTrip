@@ -1,19 +1,21 @@
-<%= simple_form_for [@itinerary, @destinations] do |f| %>
-  <%= f.input :address,
-    input_html: {
-      data: {
-        address_autocomplete_target: "address"
+<div class="itinerary_form">
+  <%= simple_form_for [@itinerary, @destinations] do |f| %>
+    <%= f.input :address,
+      input_html: {
+        data: {
+          address_autocomplete_target: "address"
+        },
+        class: "d-none"
       },
-      class: "d-none"
-    },
-    wrapper_html: {
-      data: {
-        controller: "address-autocomplete",
-        address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]
+      wrapper_html: {
+        data: {
+          controller: "address-autocomplete",
+          address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]
+        }
       }
-    }
-  %>
-<% end %>
+    %>
+  <% end %>
+</div>
 
 <div style="width: 100%; height: 90vh;"
   data-controller="map"
