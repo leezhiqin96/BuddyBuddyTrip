@@ -5,7 +5,7 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 export default class extends Controller {
   static values = { apiKey: String }
 
-  static targets = ["address"]
+  static targets = ["address","form", "formWrapper"]
 
   connect() {
     this.geocoder = new MapboxGeocoder({
@@ -29,13 +29,13 @@ export default class extends Controller {
     const coordinates = event.result["geometry"]["coordinates"]
 
     // formData to send to AJAX
-    const formData = new FormData(this.element.parentElement);
+    const formData = new FormData(this.formTarget);
     formData.set("destination[name]",  event.result["text"])
     formData.set("destination[latitude]", coordinates[1])
     formData.set("destination[longitude]",  coordinates[0])
 
     // After setting input value, create new Destination instance
-    fetch(this.element.parentElement.action, {
+    fetch(this.formTarget.action, {
       method: "POST",
       headers: {
         Accept: "application/json"
@@ -44,7 +44,8 @@ export default class extends Controller {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data)
+        this.formWrapperTarget.insertAdjacentHTML("beforeend", data.form)
+        this.geocoder.addTo(this.formWrapperTarget)
       })
   }
 

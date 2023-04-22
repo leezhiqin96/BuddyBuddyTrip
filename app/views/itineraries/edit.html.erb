@@ -1,17 +1,18 @@
-<div class="itinerary_form">
-  <%= simple_form_for [@itinerary, @destinations] do |f| %>
+<div class="itinerary_form"
+  data-controller="address-autocomplete"
+  data-address-autocomplete-target="formWrapper"
+  data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
+>
+  <%= simple_form_for([@itinerary, @destination],
+    data: {
+      address_autocomplete_target: "form"
+    }) do |f| %>
     <%= f.input :address,
       input_html: {
         data: {
           address_autocomplete_target: "address"
         },
         class: "d-none"
-      },
-      wrapper_html: {
-        data: {
-          controller: "address-autocomplete",
-          address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]
-        }
       }
     %>
   <% end %>
