@@ -4,7 +4,7 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 // Connects to data-controller="address-autocomplete"
 export default class extends Controller {
   static values = { apiKey: String }
-  static targets = ["address","form", "formWrapper"]
+  static targets = ["address","form"]
 
   connect() {
     this.geocoder = new MapboxGeocoder({
@@ -43,7 +43,7 @@ export default class extends Controller {
       .then(response => response.json())
       .then((data) => {
         if (data.inserted_item) {
-          this.formWrapperTarget.insertAdjacentHTML("afterbegin", data.inserted_item)
+          this.formTarget.insertAdjacentHTML("beforebegin", data.inserted_item)
         }
         this.formTarget.outerHTML = data.form
         this.geocoder.clear()

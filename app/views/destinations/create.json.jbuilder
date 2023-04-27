@@ -10,7 +10,8 @@ if @destination.persisted?
 
   json.inserted_item render(
     partial: "itineraries/new_destination",
-    formats: :html
+    formats: :html,
+    locals: { destination: @destination }
   )
 else
   json.form render('itineraries/edit')
