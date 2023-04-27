@@ -1,0 +1,13 @@
+ <%= simple_form_for([itinerary, destination],
+    data: {
+      address_autocomplete_target: "form"
+    }) do |f| %>
+    <%= f.input :address,
+      input_html: {
+        data: {
+          address_autocomplete_target: "address"
+        },
+        class: "d-none"
+      }
+    %>
+  <% end %>

@@ -40,7 +40,7 @@ class ItinerariesController < ApplicationController
       lng: country.longitude
     }
 
-    @destinations = Destination.new
+    @destination = Destination.new
   end
 
   private
