@@ -9,8 +9,9 @@ export default class extends Controller {
   connect() {
     this.geocoder = new MapboxGeocoder({
       accessToken: this.apiKeyValue,
-      types: "country,region,place,postcode,locality,neighborhood,address"
+      // types: "country,region,place,postcode,locality,neighborhood,address"
     })
+
     this.geocoder.addTo(this.element)
     this.geocoder.on("result", event => this.#setInputValue(event))
     this.geocoder.on("clear", () => this.#clearInputValue())
@@ -47,6 +48,14 @@ export default class extends Controller {
         }
         this.formTarget.outerHTML = data.form
         this.geocoder.clear()
+
+        // Access map element and add temporary marker
+        const mapController = this.application.getControllerForElementAndIdentifier(
+          document.querySelector("[data-controller='map']"), "map"
+        )
+        if (mapController) {
+          mapController.addTemporaryMarker(coordinates)
+        }
       })
   }
 
