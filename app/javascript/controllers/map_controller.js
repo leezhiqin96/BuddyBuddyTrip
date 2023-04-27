@@ -19,14 +19,23 @@ export default class extends Controller {
       zoom: 12
     })
 
-    // this.#fitMapToMarkers()
-    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl }))
+    this.#addMarkersToMap()
+    this.#fitMapToMarkers()
+    // this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+    //   mapboxgl: mapboxgl }))
   }
 
-  // #fitMapToMarkers() {
-  //   const bounds = new mapboxgl.LngLatBounds()
-  //   bounds.extend([ this.coordinatesValue.lng, this.coordinatesValue.lat ])
-  //   this.map.fitBounds(bounds, { padding: 200, maxZoom: 15, duration: 0 })
-  // }
+  #addMarkersToMap() {
+    this.markersValue.forEach((marker) => {
+      new mapboxgl.Marker()
+        .setLngLat([ marker.lng, marker.lat ])
+        .addTo(this.map)
+    })
+  }
+
+  #fitMapToMarkers() {
+    const bounds = new mapboxgl.LngLatBounds()
+    bounds.extend([ this.coordinatesValue.lng, this.coordinatesValue.lat ])
+    this.map.fitBounds(bounds, { padding: 200, maxZoom: 15, duration: 0 })
+  }
 }

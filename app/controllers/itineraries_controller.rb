@@ -41,6 +41,14 @@ class ItinerariesController < ApplicationController
     }
 
     @destination = Destination.new
+
+    @destinations = @itinerary.destinations
+    @markers = @destinations.geocoded.map do |destination|
+      {
+        lat: destination.latitude,
+        lng: destination.longitude
+      }
+    end
   end
 
   private
