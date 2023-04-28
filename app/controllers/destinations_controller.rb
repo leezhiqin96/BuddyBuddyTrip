@@ -12,6 +12,10 @@ class DestinationsController < ApplicationController
 
     respond_to do |format|
       if @destination.save
+        StorageDateDestination.create!(
+          storage_date: StorageDate.find(params[:destination][:storage_date]),
+          destination: @destination
+        )
         @itinerary.destinations << @destination
         format.html { redirect_to edit_itinerary_path(@itinerary) }
       else
