@@ -21,6 +21,8 @@ class ItinerariesController < ApplicationController
     # Subject to changes (To include multiple countries in the future)
     country = Country.find_by(name: itinerary_params[:name])
     @itinerary.countries << country unless country.nil?
+
+    # Create new Collaboration, where current user will be the owner
     collaboration = Collaboration.new(user: current_user, itinerary: @itinerary, role: 'editor')
 
     if @itinerary.save && collaboration.save
