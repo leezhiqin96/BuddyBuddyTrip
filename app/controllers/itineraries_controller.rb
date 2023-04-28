@@ -24,6 +24,8 @@ class ItinerariesController < ApplicationController
     collaboration = Collaboration.new(user: current_user, itinerary: @itinerary, role: 'editor')
 
     if @itinerary.save && collaboration.save
+      # Takes user stated start and end date and save it under StorageDate
+      @itinerary.store_dates
       redirect_to edit_itinerary_path(@itinerary)
     else
       render "itineraries/new", status: :unprocessable_entity

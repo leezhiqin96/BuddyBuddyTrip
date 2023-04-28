@@ -80,7 +80,7 @@ puts "Loading Itinerary Dates"
 # ===================== Start of Storage Dates =============================
 Itinerary.all.each do |itinerary|
   days_apart = ((itinerary.end_date - itinerary.start_date) / 86_400).to_i
-  (0...days_apart).each do |num|
+  (0..days_apart).each do |num|
     StorageDate.create!(
       date: itinerary.start_date + num.days,
       itinerary:

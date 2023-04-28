@@ -16,4 +16,14 @@ class Itinerary < ApplicationRecord
   validates :name, :start_date, :end_date, presence: true
   # validates :total_budget, numericality: { message: "Please provide numbers" }
   validates :end_date, comparison: { greater_than: :start_date }
+
+  def store_dates
+    days_apart = ((end_date - start_date) / 86_400).to_i
+    (0..days_apart).each do |num|
+      StorageDate.create!(
+        date: start_date + num.days,
+        itinerary: self
+      )
+    end
+  end
 end
