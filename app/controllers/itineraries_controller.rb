@@ -34,6 +34,8 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.find(params[:id])
     authorize @itinerary
 
+    # For mapbox to center to the itinerary's stated country
+    # Subject to changes if itineraries were to have multiple countries
     country = @itinerary.countries.first
     @coordinates = {
       lat: country.latitude,
@@ -42,11 +44,13 @@ class ItinerariesController < ApplicationController
 
     @destination = Destination.new
 
+    # Sending coordinates of each destination as @markers
     @destinations = @itinerary.destinations
     @markers = @destinations.geocoded.map do |destination|
       {
         lat: destination.latitude,
-        lng: destination.longitude
+        lng: destination.longitude,
+        destination_info: render_to_string(partial: "destinations/destination_info", locals: { destination: })
       }
     end
   end

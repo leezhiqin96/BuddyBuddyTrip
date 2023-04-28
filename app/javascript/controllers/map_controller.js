@@ -27,8 +27,10 @@ export default class extends Controller {
 
   #addMarkersToMap() {
     this.markersValue.forEach((marker) => {
+      const popup = new mapboxgl.Popup().setHTML(marker.destination_info)
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
+        .setPopup(popup)
         .addTo(this.map)
     })
   }
@@ -40,7 +42,7 @@ export default class extends Controller {
   }
 
   addTemporaryMarker(coordinates) {
-    const marker = new mapboxgl.Marker({ color: "#FF0000" })
+    new mapboxgl.Marker({ color: "#FF0000" })
       .setLngLat(coordinates)
       .addTo(this.map);
   }
