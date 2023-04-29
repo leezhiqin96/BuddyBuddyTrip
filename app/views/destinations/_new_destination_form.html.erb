@@ -1,13 +1,17 @@
- <%= simple_form_for([itinerary, destination],
-    data: {
-      address_autocomplete_target: "form"
-    }) do |f| %>
-    <%= f.input :address,
-      input_html: {
-        data: {
-          address_autocomplete_target: "address"
-        },
-        class: "d-none"
-      }
-    %>
-  <% end %>
+<%= simple_form_for([itinerary, destination],
+  data: {
+    address_autocomplete_target: "form"
+  }) do |f| %>
+  <%= f.input :address,
+    input_html: {
+      data: {
+        address_autocomplete_target: "address"
+      },
+      class: "d-none"
+    }
+  %>
+
+  <%# Set the storage_date attribute to the current date object %>
+  <%= f.hidden_field :storage_date_id, value: storage_date_id %>
+
+<% end %>

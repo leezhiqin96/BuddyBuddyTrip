@@ -1,5 +1,9 @@
 <% @itinerary.storage_dates.each do |date| %>
   <%= date.date %>
+  <% date.destinations.each do |destination| %>
+    <p><%= destination.name %></p>
+    <p><%= destination.address %></p>
+  <% end %>
   <div class="itinerary_form"
     data-controller="address-autocomplete"
     data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"

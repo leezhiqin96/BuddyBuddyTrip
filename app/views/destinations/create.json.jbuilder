@@ -4,7 +4,8 @@ if @destination.persisted?
     formats: :html,
     locals: {
       itinerary: @itinerary,
-      destination: Destination.new
+      destination: Destination.new,
+      storage_date_id: params[:destination][:storage_date_id]
     }
   )
 

@@ -35,7 +35,7 @@ class ItinerariesController < ApplicationController
   end
 
   def edit
-    @itinerary = Itinerary.find(params[:id])
+    @itinerary = Itinerary.includes(storage_dates: [:destinations]).find(params[:id])
     authorize @itinerary
 
     # For mapbox to center to the itinerary's stated country
@@ -46,6 +46,7 @@ class ItinerariesController < ApplicationController
       lng: country.longitude
     }
 
+    # Address autocomplete search bar
     @destination = Destination.new
 
     # Sending coordinates of each destination as @markers
