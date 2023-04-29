@@ -21,4 +21,8 @@ class ItineraryPolicy < ApplicationPolicy
   def edit?
     record.owner == user
   end
+
+  def destroy?
+    record.owner == user
+  end
 end
