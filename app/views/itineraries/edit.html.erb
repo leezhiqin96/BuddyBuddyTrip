@@ -1,34 +1,47 @@
 <% @itinerary.storage_dates.each do |date| %>
-  <%= date.date %>
-  <% date.destinations.each do |destination| %>
-    <p><%= destination.name %></p>
-    <p><%= destination.address %></p>
-  <% end %>
-  <div class="itinerary_form"
-    data-controller="address-autocomplete"
-    data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
-  >
-    <%= simple_form_for([@itinerary, @destination],
-      data: {
-        address_autocomplete_target: "form"
-      }) do |f| %>
-      <%= f.input :address,
-        input_html: {
+  <div class="destination-card" data-controller="destination">
+    <%# Display Date %>
+    <p><%= date.date %></p>
+
+    <%# Display all destination %>
+    <% date.destinations.each do |destination| %>
+      <div class="destination-details">
+        <p><%= destination.name %></p>
+        <p><%= destination.address %></p>
+        <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, destination_path(destination),
           data: {
-            address_autocomplete_target: "address"
+            turbo_method: :delete,
+            action: "click->destination#deleteDestination"
           },
-          class: "d-none"
-        }
-      %>
-
-      <%# Set the storage_date attribute to the current date object %>
-      <%= f.hidden_field :storage_date_id, value: date.id %>
-
+          class: "trash-icon" %>
+      </div>
     <% end %>
+
+    <%# Start of address autocomplete %>
+    <div class="itinerary_form"
+      data-controller="address-autocomplete"
+      data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
+    >
+      <%= simple_form_for([@itinerary, @destination],
+        data: {
+          address_autocomplete_target: "form"
+        }) do |f| %>
+        <%= f.input :address,
+          input_html: {
+            data: {
+              address_autocomplete_target: "address"
+            },
+            class: "d-none"
+          }
+        %>
+
+        <%# Set the storage_date attribute to the current date object %>
+        <%= f.hidden_field :storage_date_id, value: date.id %>
+
+      <% end %>
+    </div>
   </div>
 <% end %>
-
-
 
 <div style="width: 100%; height: 90vh;"
   data-controller="map"

@@ -1,2 +1,10 @@
-<p><%= destination.name %></p>
-<p><%= destination.address %></p>
+<div class="destination-details">
+  <p><%= destination.name %></p>
+  <p><%= destination.address %></p>
+  <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, destination_path(destination),
+    data: {
+      turbo_method: :delete,
+      action: "click->destination#deleteDestination"
+    },
+    class: "trash-icon" %>
+</div>
