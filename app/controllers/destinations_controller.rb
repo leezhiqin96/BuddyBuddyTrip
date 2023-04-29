@@ -6,16 +6,12 @@ class DestinationsController < ApplicationController
     @itinerary = Itinerary.find(params[:itinerary_id])
 
     coordinates = [destinations_params[:latitude], destinations_params[:longitude]]
-    country = Country.find(Geocoder.search(coordinates).first.country_code.upcase)
-
-    @destination.country = country
+    @destination.assign_destination_to_country(coordinates)
 
     respond_to do |format|
       if @destination.save
-        StorageDateDestination.create!(
-          storage_date: StorageDate.find(params[:destination][:storage_date]),
-          destination: @destination
-        )
+        # Assign destination to a certain date
+        @destination.assign_destination_to_date(params[:destination][:storage_date_id])
         @itinerary.destinations << @destination
         format.html { redirect_to edit_itinerary_path(@itinerary) }
       else
