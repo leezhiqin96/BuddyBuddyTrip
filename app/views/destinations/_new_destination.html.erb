@@ -1,2 +1,8 @@
 <p><%= destination.name %></p>
 <p><%= destination.address %></p>
+<%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, destination_path(destination),
+  data: {
+    turbo_method: :delete,
+    turbo_confirm: "Are you sure?"
+  },
+  class: "trash-icon" %>

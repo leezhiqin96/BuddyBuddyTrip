@@ -21,6 +21,15 @@ class DestinationsController < ApplicationController
     end
   end
 
+  def destroy
+    skip_authorization
+
+    @destination = Destination.find(params[:id])
+    @destination.destroy
+
+    redirect_to edit_itinerary_path(Itinerary.find(params[:itinerary_id]))
+  end
+
   private
 
   def destinations_params

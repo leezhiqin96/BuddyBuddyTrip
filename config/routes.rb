@@ -13,9 +13,10 @@ Rails.application.routes.draw do
 
   # Itineraries routes
   resources :itineraries, only: %i[index new create show edit update destroy] do
-    resources :destinations, only: %i[create update destroy]
-    resources :storage_dates, only: %i[create update destroy]
+    resources :destinations, only: %i[create]
   end
+
+  resources :destinations, only: %i[update destroy]
 
   get '/search_countries', to: 'countries#search', as: :search_countries
 end
