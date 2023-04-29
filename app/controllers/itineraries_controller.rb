@@ -21,9 +21,13 @@ class ItinerariesController < ApplicationController
     # Subject to changes (To include multiple countries in the future)
     country = Country.find_by(name: itinerary_params[:name])
     @itinerary.countries << country unless country.nil?
+
+    # Create new Collaboration, where current user will be the owner
     collaboration = Collaboration.new(user: current_user, itinerary: @itinerary, role: 'editor')
 
     if @itinerary.save && collaboration.save
+      # Takes user stated start and end date and save it under StorageDate
+      @itinerary.store_dates
       redirect_to edit_itinerary_path(@itinerary)
     else
       render "itineraries/new", status: :unprocessable_entity
@@ -31,7 +35,7 @@ class ItinerariesController < ApplicationController
   end
 
   def edit
-    @itinerary = Itinerary.find(params[:id])
+    @itinerary = Itinerary.includes(storage_dates: [:destinations]).find(params[:id])
     authorize @itinerary
 
     # For mapbox to center to the itinerary's stated country
@@ -42,6 +46,7 @@ class ItinerariesController < ApplicationController
       lng: country.longitude
     }
 
+    # Address autocomplete search bar
     @destination = Destination.new
 
     # Sending coordinates of each destination as @markers
