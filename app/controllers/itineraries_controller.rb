@@ -60,6 +60,14 @@ class ItinerariesController < ApplicationController
     end
   end
 
+  def destroy
+    @itinerary = Itinerary.find(params[:id])
+    authorize @itinerary
+    @itinerary.destroy
+
+    redirect_to authenticated_root_path
+  end
+
   private
 
   def itinerary_params

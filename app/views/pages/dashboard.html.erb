@@ -2,4 +2,10 @@
 <% @itineraries.each do |itinerary| %>
   <% collaboration = Collaboration.find_by(user: current_user, itinerary:) %>
   <p><%= link_to itinerary.name, collaboration.editor? ? edit_itinerary_path(itinerary) : itinerary_path(itinerary) %></p>
+  <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, itinerary_path(itinerary),
+      data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure?"
+      },
+      class: "trash-icon" %>
 <% end %>
