@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :itineraries, through: :collaborations
-  has_many :itineraries, foreign_key: :owner_id
+  has_many :itineraries, foreign_key: :owner_id, dependent: :destroy
   has_many :collaborations
 
   validates :first_name, :last_name, :email, :username, presence: true
