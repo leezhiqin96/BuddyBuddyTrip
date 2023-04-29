@@ -1,4 +1,6 @@
 class DestinationsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def create
     skip_authorization
 
@@ -27,7 +29,10 @@ class DestinationsController < ApplicationController
     @destination = Destination.find(params[:id])
     @destination.destroy
 
-    redirect_to edit_itinerary_path(Itinerary.find(params[:itinerary_id]))
+    respond_to do |format|
+      # format.html { redirect_to edit_itinerary_path(Itinerary.find(params[:itinerary_id])) }
+      format.json { render json: { destination: @destination.persisted?, status: :see_other } }
+    end
   end
 
   private
