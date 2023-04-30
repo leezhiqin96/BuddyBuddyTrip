@@ -1,5 +1,7 @@
 class CollaborationsController < ApplicationController
   def new
+    @itinerary = Itinerary.find(params[:itinerary_id])
+    @collaboration = Collaboration.new
   end
 
   def create

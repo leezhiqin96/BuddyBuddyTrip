@@ -1,4 +1,6 @@
 <%= link_to "Add new trip", new_itinerary_path %>
+
+<%# Displaying all owned itinerary %>
 <% @itineraries.each do |itinerary| %>
   <% collaboration = Collaboration.find_by(user: current_user, itinerary:) %>
   <p><%= link_to itinerary.name, collaboration.editor? ? edit_itinerary_path(itinerary) : itinerary_path(itinerary) %></p>
