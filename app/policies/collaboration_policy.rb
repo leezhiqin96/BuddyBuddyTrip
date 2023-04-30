@@ -5,4 +5,12 @@ class CollaborationPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
+  def new?
+    create?
+  end
+
+  def create?
+    record.itinerary.owner == user
+  end
 end
