@@ -1,2 +1,8 @@
-<h1>Collaborations#new</h1>
-<p>Find me in app/views/collaborations/new.html.erb</p>
+<h2>Invite a friend!</h2>
+<%= simple_form_for([@itinerary, @collaboration]) do |f| %>
+  <% f.simple_fields_for :user do |u| %>
+    <%= u.input :email %>
+    <%= u.input :username %>
+    <%= f.submit "Invite" %>
+  <% end %>
+<% end %>
