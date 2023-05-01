@@ -13,12 +13,12 @@ class CollaborationsController < ApplicationController
     # Takes in collaboration parameters and find the user by username or email
     user = Collaboration.find_user(collaboration_params[:user])
 
-    if user
-      @collaboration = Collaboration.new(itinerary: @itinerary, user:)
-      @collaboration.role = collaboration_params[:role]
-      @collaboration.save
+    @collaboration = Collaboration.new(itinerary: @itinerary, user:, role: collaboration_params[:role])
+
+    if @collaboration.save
       redirect_to edit_itinerary_path(@itinerary)
     else
+      flash[:alert] = "User not found."
       render "collaborations/new", status: :unprocessable_entity
     end
   end
