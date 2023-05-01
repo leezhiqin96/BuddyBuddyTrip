@@ -19,7 +19,9 @@ class ItineraryPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.owner == user
+    collaboration = Collaboration.find_by(user:)
+    # record.collaborations.find_by(user:).user == user &&
+    collaboration.editor?
   end
 
   def destroy?

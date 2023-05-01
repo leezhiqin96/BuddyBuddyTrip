@@ -10,7 +10,7 @@ class CollaborationsController < ApplicationController
     @itinerary = Itinerary.find(params[:itinerary_id])
     authorize @itinerary
 
-    # Takes in collaboration parameters and find the user by username or email
+    # Takes in collaboration parameters and find the user by username or email, return user or nil
     user = Collaboration.find_user(collaboration_params[:user])
 
     @collaboration = Collaboration.new(itinerary: @itinerary, user:, role: collaboration_params[:role])
