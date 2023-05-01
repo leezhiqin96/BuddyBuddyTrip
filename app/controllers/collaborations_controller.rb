@@ -18,7 +18,7 @@ class CollaborationsController < ApplicationController
     if @collaboration.save
       redirect_to edit_itinerary_path(@itinerary)
     else
-      flash[:alert] = "User not found."
+      flash[:alert] = @collaboration.errors.any? ? @collaboration.errors.full_messages.join(", ") : "User not found"
       render "collaborations/new", status: :unprocessable_entity
     end
   end
