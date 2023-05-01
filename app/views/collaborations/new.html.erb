@@ -1,0 +1,9 @@
+<h2>Invite a friend!</h2>
+<%= simple_form_for([@itinerary, @collaboration]) do |f| %>
+  <%= f.simple_fields_for :user do |u| %>
+    <%= u.input :email %>
+    <%= u.input :username %>
+  <% end %>
+  <%= f.select :role, [['Editor','editor'], ['Viewer', 'viewer']] %>
+  <%= f.submit "Invite" %>
+<% end %>

@@ -1,8 +1,9 @@
 <%= link_to "Add new trip", new_itinerary_path %>
-<% @itineraries.each do |itinerary| %>
-  <% collaboration = Collaboration.find_by(user: current_user, itinerary:) %>
-  <p><%= link_to itinerary.name, collaboration.editor? ? edit_itinerary_path(itinerary) : itinerary_path(itinerary) %></p>
-  <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, itinerary_path(itinerary),
+
+<%# Displaying all owned or collaborating itinerary %>
+<% @collaborations.each do |collaboration| %>
+  <p><%= link_to collaboration.itinerary.name, collaboration.editor? ? edit_itinerary_path(collaboration.itinerary) : itinerary_path(collaboration.itinerary) %></p>
+  <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, itinerary_path(collaboration.itinerary),
       data: {
         turbo_method: :delete,
         turbo_confirm: "Are you sure?"

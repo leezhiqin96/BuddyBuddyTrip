@@ -1,3 +1,7 @@
+<%# Start of adding new collaborators %>
+<%= link_to "Add a collaborator!", new_itinerary_collaboration_path(@itinerary) %>
+
+<%# Start of Itinerary Dates %>
 <% @itinerary.storage_dates.each do |date| %>
   <div class="destination-card" data-controller="destination">
     <%# Display Date %>
@@ -43,6 +47,7 @@
   </div>
 <% end %>
 
+<%# Start of Map %>
 <div style="width: 100%; height: 90vh;"
   data-controller="map"
   data-map-coordinates-value="<%= @coordinates.to_json %>"

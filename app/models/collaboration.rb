@@ -9,4 +9,10 @@ class Collaboration < ApplicationRecord
   def editor?
     role == 'editor'
   end
+
+  def self.find_user(params)
+    email = params[:email]
+    username = params[:username]
+    User.find_by(email:) || User.find_by(username:)
+  end
 end
