@@ -1,0 +1,14 @@
+<% @collaborations.each do |collaboration| %>
+  <%# Hide owner's name %>
+  <% unless collaboration.user == current_user %>
+    <div>
+      <p><%= collaboration.user.full_name %></p>
+      <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, collaboration_path(collaboration),
+          data: {
+            turbo_method: :delete,
+            turbo_confirm: "Remove from itinerary?"
+          },
+          class: "trash-icon" %>
+    </div>
+  <% end %>
+<% end %>

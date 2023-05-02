@@ -35,7 +35,7 @@ class ItinerariesController < ApplicationController
   end
 
   def edit
-    @itinerary = Itinerary.includes(storage_dates: [:destinations]).find(params[:id])
+    @itinerary = Itinerary.includes(:collaborations, storage_dates: [:destinations]).find(params[:id])
     authorize @itinerary
 
     # For mapbox to center to the itinerary's stated country

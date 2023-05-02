@@ -1,4 +1,9 @@
 class CollaborationsController < ApplicationController
+  def index
+    @itinerary = Itinerary.includes(:collaborations).find(params[:itinerary_id])
+    @collaborations = policy_scope(@itinerary.collaborations)
+  end
+
   def new
     @itinerary = Itinerary.find(params[:itinerary_id])
     @collaboration = Collaboration.new
@@ -30,6 +35,11 @@ class CollaborationsController < ApplicationController
   end
 
   def destroy
+    @collaboration = Collaboration.find(params[:id])
+    authorize @collaboration
+
+    @collaboration.destroy
+    redirect_to itinerary_collaborations_path(@collaboration.itinerary)
   end
 
   private

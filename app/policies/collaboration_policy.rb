@@ -1,9 +1,8 @@
 class CollaborationPolicy < ApplicationPolicy
   class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+    def resolve
+      scope.all
+    end
   end
 
   def new?
@@ -11,6 +10,10 @@ class CollaborationPolicy < ApplicationPolicy
   end
 
   def create?
+    record.itinerary.owner == user
+  end
+
+  def destroy?
     record.itinerary.owner == user
   end
 end
