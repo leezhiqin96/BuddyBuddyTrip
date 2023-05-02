@@ -29,7 +29,7 @@
         <% @itinerary.storage_dates.each do |date| %>
           <div class="destination-card" data-controller="destination">
             <%# Display Date %>
-            <p><%= date.date %></p>
+            <p><%= date.date.strftime('%A, %d %B') %></p>
 
             <%# Display all destination %>
             <% date.destinations.each do |destination| %>
