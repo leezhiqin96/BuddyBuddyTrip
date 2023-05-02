@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # Itineraries routes
   resources :itineraries, only: %i[index new create show edit update destroy] do
     resources :destinations, only: %i[create]
-    resources :collaborations, only: %i[new create]
+    resources :collaborations, only: %i[index new create]
   end
 
   resources :destinations, only: %i[update destroy]
