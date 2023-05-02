@@ -1,12 +1,21 @@
 <div class="itinerary-wrapper">
   <div class="itinerary-container">
+    <%# Itinerary navbar %>
     <%= link_to root_path, class: "navbar-brand" do %>
       <%= image_tag "BBT Logo.png" %>
     <% end %>
+    <%# End of itinerary navbar %>
+
+    <%# To add in banner %>
+    <div class="itinerary-banner">
+    </div>
+    <%# End of banner %>
+
+    <%# Itinerary planning starts here %>
     <div class="container">
       <div class="itinerary-overview">
         <h1><%= @itinerary.name %></h1>
-        <%# Start of adding new collaborators %>
+        <%# Adding new collaborators %>
         <%= link_to "Add a collaborator!", new_itinerary_collaboration_path(@itinerary) %>
 
         <%# Editing collaborators %>
@@ -63,6 +72,7 @@
         <% end %>
       </div>
     </div>
+    <%# End of Itinerary planning %>
   </div>
 
 
