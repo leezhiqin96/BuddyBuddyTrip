@@ -39,7 +39,7 @@ class CollaborationsController < ApplicationController
     authorize @collaboration
 
     @collaboration.destroy
-    redirect_to itinerary_collaborations_path(@collaboration.itinerary)
+    # redirect_to itinerary_collaborations_path(@collaboration.itinerary)
   end
 
   private
