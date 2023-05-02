@@ -11,4 +11,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :email, :username, presence: true
   validates :email, :username, uniqueness: true
   # validates :username, length: { minimum: 3, too_short: '%<count> characters minimum for your username!' }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
