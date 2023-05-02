@@ -1,7 +1,7 @@
 class CollaborationsController < ApplicationController
   def index
     @itinerary = Itinerary.includes(:collaborations).find(params[:itinerary_id])
-    @collaborations = @itinerary.collaborations
+    @collaborations = policy_scope(@itinerary.collaborations)
   end
 
   def new

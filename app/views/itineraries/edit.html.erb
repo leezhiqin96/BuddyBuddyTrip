@@ -2,7 +2,9 @@
 <%= link_to "Add a collaborator!", new_itinerary_collaboration_path(@itinerary) %>
 
 <%# Editing collaborators %>
-<%= link_to "Manage collaborators!", itinerary_collaborations_path(@itinerary) %>
+<% if @itinerary.owner == current_user %>
+  <%= link_to "Manage collaborators!", itinerary_collaborations_path(@itinerary) %>
+<% end %>
 
 <%# Start of Itinerary Dates %>
 <% @itinerary.storage_dates.each do |date| %>
