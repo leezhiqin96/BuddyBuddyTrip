@@ -12,4 +12,8 @@ class CollaborationPolicy < ApplicationPolicy
   def create?
     record.itinerary.owner == user
   end
+
+  def destroy?
+    record.itinerary.owner == user
+  end
 end

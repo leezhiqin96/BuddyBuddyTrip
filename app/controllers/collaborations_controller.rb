@@ -35,6 +35,11 @@ class CollaborationsController < ApplicationController
   end
 
   def destroy
+    @collaboration = Collaboration.find(params[:id])
+    authorize @collaboration
+
+    @collaboration.destroy
+    redirect_to itinerary_collaborations_path(@collaboration.itinerary)
   end
 
   private
