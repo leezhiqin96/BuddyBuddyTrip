@@ -3,10 +3,19 @@
 <%# Displaying all owned or collaborating itinerary %>
 <% @collaborations.each do |collaboration| %>
   <p><%= link_to collaboration.itinerary.name, collaboration.editor? ? edit_itinerary_path(collaboration.itinerary) : itinerary_path(collaboration.itinerary) %></p>
-  <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, itinerary_path(collaboration.itinerary),
-      data: {
-        turbo_method: :delete,
-        turbo_confirm: "Are you sure?"
-      },
-      class: "trash-icon" %>
+  <% if collaboration.itinerary.owner == current_user %>
+    <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, itinerary_path(collaboration.itinerary),
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        },
+        class: "trash-icon" %>
+  <% else %>
+    <%= link_to '<i class="fa-regular fa-trash-can"></i> Leave Trip'.html_safe, collaboration_path(collaboration),
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        },
+        class: "trash-icon" %>
+  <% end %>
 <% end %>
