@@ -13,6 +13,7 @@
   </head>
 
   <body>
+    <%# Wont render navbar if it's itineraries controller %>
     <% unless params[:controller] == "itineraries" %>
       <%= render "shared/navbar" %>
     <% end %>
