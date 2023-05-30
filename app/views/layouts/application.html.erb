@@ -13,7 +13,10 @@
   </head>
 
   <body>
-    <%= render "shared/navbar" %>
+    <%# Wont render navbar if it's itineraries controller %>
+    <% unless params[:controller] == "itineraries" %>
+      <%= render "shared/navbar" %>
+    <% end %>
     <%= render "shared/flashes" %>
 
     <%= yield %>

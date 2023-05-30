@@ -1,61 +1,88 @@
-<%# Start of adding new collaborators %>
-<%= link_to "Add a collaborator!", new_itinerary_collaboration_path(@itinerary) %>
-
-<%# Editing collaborators %>
-<% if @itinerary.owner == current_user %>
-  <%= link_to "Manage collaborators!", itinerary_collaborations_path(@itinerary) %>
-<% end %>
-
-<%# Start of Itinerary Dates %>
-<% @itinerary.storage_dates.each do |date| %>
-  <div class="destination-card" data-controller="destination">
-    <%# Display Date %>
-    <p><%= date.date %></p>
-
-    <%# Display all destination %>
-    <% date.destinations.each do |destination| %>
-      <div class="destination-details">
-        <p><%= destination.name %></p>
-        <p><%= destination.address %></p>
-        <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, destination_path(destination),
-          data: {
-            turbo_method: :delete,
-            action: "click->destination#deleteDestination"
-          },
-          class: "trash-icon" %>
-      </div>
+<div class="itinerary-wrapper">
+  <div class="itinerary-container">
+    <%# Itinerary navbar %>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "BBT Logo.png" %>
     <% end %>
+    <%# End of itinerary navbar %>
 
-    <%# Start of address autocomplete %>
-    <div class="itinerary_form"
-      data-controller="address-autocomplete"
-      data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
-    >
-      <%= simple_form_for([@itinerary, @destination],
-        data: {
-          address_autocomplete_target: "form"
-        }) do |f| %>
-        <%= f.input :address,
-          input_html: {
-            data: {
-              address_autocomplete_target: "address"
-            },
-            class: "d-none"
-          }
-        %>
-
-        <%# Set the storage_date attribute to the current date object %>
-        <%= f.hidden_field :storage_date_id, value: date.id %>
-
-      <% end %>
+    <%# To add in banner %>
+    <div class="itinerary-banner">
     </div>
-  </div>
-<% end %>
+    <%# End of banner %>
 
-<%# Start of Map %>
-<div style="width: 100%; height: 90vh;"
-  data-controller="map"
-  data-map-coordinates-value="<%= @coordinates.to_json %>"
-  data-map-markers-value="<%= @markers.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    <%# Itinerary planning starts here %>
+    <div class="container">
+      <div class="itinerary-overview">
+        <h1><%= @itinerary.name %></h1>
+        <%# Adding new collaborators %>
+        <%= link_to "Add a collaborator!", new_itinerary_collaboration_path(@itinerary) %>
+
+        <%# Editing collaborators %>
+        <% if @itinerary.owner == current_user %>
+          <%= link_to "Manage collaborators!", itinerary_collaborations_path(@itinerary) %>
+        <% end %>
+      </div>
+
+      <div class="itinerary-details">
+        <%# Start of Itinerary Dates %>
+        <% @itinerary.storage_dates.each do |date| %>
+          <div class="destination-card" data-controller="destination">
+            <%# Display Date %>
+            <p><%= date.date.strftime('%A, %d %B') %></p>
+
+            <%# Display all destination %>
+            <% date.destinations.each do |destination| %>
+              <div class="destination-details">
+                <p><%= destination.name %></p>
+                <p><%= destination.address %></p>
+                <%= link_to '<i class="fa-regular fa-trash-can"></i>'.html_safe, destination_path(destination),
+                  data: {
+                    turbo_method: :delete,
+                    action: "click->destination#deleteDestination"
+                  },
+                  class: "trash-icon" %>
+              </div>
+            <% end %>
+
+            <%# Start of address autocomplete %>
+            <div class="destination_form"
+              data-controller="address-autocomplete"
+              data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
+            >
+              <%= simple_form_for([@itinerary, @destination],
+                data: {
+                  address_autocomplete_target: "form"
+                }) do |f| %>
+                <%= f.input :address,
+                  label: 'Add a new place',
+                  input_html: {
+                    data: {
+                      address_autocomplete_target: "address"
+                    },
+                    class: "d-none"
+                  }
+                %>
+
+                <%# Set the storage_date attribute to the current date object %>
+                <%= f.hidden_field :storage_date_id, value: date.id %>
+              <% end %>
+              <%# End of address autocomplete %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <%# End of Itinerary planning %>
+  </div>
+
+
+  <%# Start of Map %>
+  <div style="width: 100%; height: 100vh;"
+    data-controller="map"
+    data-map-coordinates-value="<%= @coordinates.to_json %>"
+    data-map-markers-value="<%= @markers.to_json %>"
+    data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+  </div>
+
 </div>
