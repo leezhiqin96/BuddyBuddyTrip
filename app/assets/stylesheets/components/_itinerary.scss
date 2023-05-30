@@ -14,6 +14,9 @@
   }
 }
 
+.test {
+}
+
 .itinerary-overview {
   border: solid 1px black;
   border-radius: 8px;
@@ -27,7 +30,6 @@
 @media only screen and (max-device-width: 480px) {
   /* styles for smartphones */
   .itinerary-wrapper {
-
     .itinerary-container {
       width: 100%;
     }
@@ -38,7 +40,6 @@
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) {
   /* styles for tablets */
   .itinerary-wrapper {
-
     .itinerary-container {
       width: 100%;
     }
@@ -49,7 +50,6 @@
 @media only screen and (min-device-width: 1025px) {
   /* styles for desktops */
   .itinerary-wrapper {
-
     .itinerary-container {
       width: 60%;
     }
